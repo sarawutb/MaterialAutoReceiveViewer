@@ -1,0 +1,41 @@
+﻿@using Material_Auto_Receive_Viewer.Pages.Widget
+@inherits LayoutComponentBase
+<ErrorBoundary>
+    <ChildContent>
+        <div class="container-scroller">
+            <NavMenu />
+            <div class="container-fluid page-body-wrapper">
+                <HeadLayout />
+                <div class="main-panel">
+                    <div class="content-wrapper">
+                        @Body
+                    </div>
+                    <!-- content-wrapper ends -->
+                    <FooterLayout/>
+                </div>
+                <!-- main-panel ends -->
+            </div>
+            <!-- page-body-wrapper ends -->
+        </div>
+        <!-- container-scroller -->
+    </ChildContent>
+    <ErrorContent Context="Exception">
+        <ErrorView Exception="@Exception" />
+    </ErrorContent>
+</ErrorBoundary>
+
+@inject IJSRuntime jsRuntime;
+
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await jsRuntime.InvokeAsync<IJSObjectReference>("import", "./assets/js/off-canvas.js");
+            await jsRuntime.InvokeAsync<IJSObjectReference>("import", "./assets/js/hoverable-collapse.js");
+            await jsRuntime.InvokeAsync<IJSObjectReference>("import", "./assets/js/misc.js");
+            await jsRuntime.InvokeAsync<IJSObjectReference>("import", "./assets/js/settings.js");
+            await jsRuntime.InvokeAsync<IJSObjectReference>("import", "./assets/js/todolist.js");
+        }
+    }
+}

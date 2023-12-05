@@ -1,0 +1,12 @@
+﻿@page "/PickingDetail/{DocNo}";
+@using Material_Auto_Receive_Viewer.ViewModels;
+@using Material_Auto_Receive_Viewer.ViewModels.Imprement;
+
+@inherits MvvmComponentBase<PickingDetailViewModel>
+<h3>PickingDetail @ViewModel.DocNo</h3>
+
+@code {
+
+    [Parameter]
+    public string DocNo { set { ViewModel.DocNo = value; } }
+}

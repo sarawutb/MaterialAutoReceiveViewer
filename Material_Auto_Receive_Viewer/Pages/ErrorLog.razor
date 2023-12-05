@@ -1,0 +1,100 @@
+﻿@page "/ErrorLog"
+
+@using Material_Auto_Receive_Viewer.ViewModels;
+@using Material_Auto_Receive_Viewer.ViewModels.implement;
+@using System.Globalization;
+@inherits MvvmComponentBase<ErrorLogViewModel>
+@inject IJSRuntime _JS;
+
+<h3>Error Log</h3>
+
+<div class="row ">
+    <div class="col-12 grid-margin">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">กรองค้นหา</h4>
+                <div class="row">
+                    <div class="col-md-3 col-sm-6">
+                        <Field>
+                            <FieldLabel>Start date</FieldLabel>
+                            <FieldBody>
+                                <DatePicker @bind-Date="ViewModel.DateStart" Class="form-control" DisplayFormat="dd/MM/yyyy" Placeholder="dd /mm/yyyy" />
+                            </FieldBody>
+                            <FieldHelp>Format: dd/mm/yyyy</FieldHelp>
+                        </Field>
+                    </div>
+                    <div class="col-md-4">
+                        <button @onclick="ViewModel.GetViewLog" class="btn btn-primary mt-4" type="button">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (ViewModel.ErrorLog != null)
+{
+    @if (ViewModel.ErrorLog.DetailLog.Count > 0)
+    {
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Error Log Detail</h4>
+                <div class="row">
+                    <div class="col-md-2">
+                        <div>
+                            <p class="font-weight-bold">Url File Log : </p>
+                        </div>
+                    </div>
+                    <div class="col-md-10">
+                        <div class="text-primary">
+                            <a href="@ViewModel.ErrorLog.LogFile" class="font-weight-bold"> @ViewModel.ErrorLog.LogFile</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Data Log</h4>
+                @foreach (var (log, index) in ViewModel.ErrorLog.DetailLog.Select((i, v) => (i, v)))
+                {
+                    if (log != null)
+                    {
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div>
+                                    <p class="font-weight-bold"> @log.DateTime.ToString("dd/MM/yyyy HH:mm:ss", new CultureInfo("en-US")) </p>
+                                </div>
+                            </div>
+                            <div class="col-md-10">
+                                <div class="text-danger">
+
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <p>@log.UrlRequest</p>
+                                            @{
+                                                var inputData = string.Format("Input{0}", index);
+                                                var outData = string.Format("Output{0}", index);
+                                            }
+                                            <textarea hidden id="@inputData">@log.ApiData</textarea>
+                                            <div id="@outData"></div>
+                                            @{
+                                                LoadJson(inputData, outData);
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    }
+}
+@code {
+    protected async Task LoadJson(string InputElement, string OutPutElemnet)
+    {
+        await _JS.InvokeVoidAsync("ViewerJSON", InputElement, OutPutElemnet);
+    }
+}

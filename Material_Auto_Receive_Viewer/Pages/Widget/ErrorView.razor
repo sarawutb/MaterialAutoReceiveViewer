@@ -1,0 +1,88 @@
+﻿@page "/ErroeView"
+@inject ILogger<ErrorView> Logger
+@inject NavigationManager Navigation
+
+<div class="container-scroller">
+    <div class="container-fluid page-body-wrapper full-page-wrapper">
+        <div class="content-wrapper d-flex align-items-center text-center error-page bg-dark">
+            <div class="row flex-grow">
+                <div class="col-lg-7 mx-auto text-white">
+                    <div class="row align-items-center d-flex flex-row">
+                        <div class="col-lg-6 text-lg-right pr-lg-4">
+                            <h1 class="display-1 mb-0">500</h1>
+                        </div>
+                        <div class="col-lg-6 error-page-divider text-lg-left pl-lg-4">
+                            <h2>SORRY!</h2>
+                            <h3 class="font-weight-light">Internal server error!</h3>
+                        </div>
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col-12 text-center mt-xl-2">
+                            @if (Exception != null)
+                            {
+                                <div>
+                                    <div class="col-md-12 grid-margin stretch-card">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h4 class="card-title text-warning">Error</h4>
+                                                <p class="card-description">
+                                                    Message : <code>@Exception.Message</code>
+                                                </p>
+                                                <p class="card-description">
+                                                    StackTrace : <code>@Exception.ToString()</code>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col-12 text-center mt-xl-2">
+                            <Button class="btn btn-primary text-white font-weight-medium" @onclick="BackToHome">Back to home</Button>
+                        </div>
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col-12 mt-xl-2">
+                            <p class="text-white font-weight-medium text-center">Copyright &copy; 2020 All rights reserved.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- content-wrapper ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+</div>
+
+@code {
+    private Exception? _Exception;
+
+    [Parameter]
+    public Exception? Exception
+    {
+        get => _Exception;
+        set
+        {
+            _Exception = value;
+            if (value != null)
+                ProcessError(value);
+        }
+    }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    public void ProcessError(Exception ex)
+    {
+        Logger.LogError("Error:ProcessError - Type: {Type} Message: {Message}",
+            ex.GetType(), ex.Message);
+    }
+
+    private void BackToHome()
+    {
+        Navigation.NavigateTo("/", true);
+    }
+}

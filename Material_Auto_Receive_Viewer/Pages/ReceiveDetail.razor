@@ -1,0 +1,170 @@
+﻿@page "/ReceiveDetail/{DocNo}/{OwnerSiteId:int}/{ReceiveSiteId:int}";
+
+@using Material_Auto_Receive_Viewer.Services;
+@using Material_Auto_Receive_Viewer.ViewModels;
+@using Material_Auto_Receive_Viewer.Utility;
+@using Material_Auto_Receive_Viewer.Pages.Compronent;
+@using Material_Auto_Receive_Viewer.ViewModels.Imprement;
+@using Material_Auto_Receive_Viewer.Services.Interface;
+
+@inherits MvvmComponentBase<ReceiveDetailViewModel>
+
+<h3>ReceiveDetail : @ViewModel.DocNo</h3>
+@if (ViewModel.MaterialReceiveModel.ARP_Material_Request_MST != null)
+{
+    <Alert Color="Color.Dark" Visible>
+        <AlertMessage>Data Center Master</AlertMessage>
+    </Alert>
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <TabelAllProperty Title="ARP_Material_Request_MST" ViewModel="ViewModel.MaterialReceiveModel.ARP_Material_Request_MST" />
+                </div>
+                <div class="card-body">
+                    <TabelAllProperty Title="ARP_Material_Request_MST_Reference" ViewModel="ViewModel.MaterialReceiveModel.ArpMaterialRequestMstReference" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <TabelAllProperty Title="ARP_Receive_Plan_MST" ViewModel="ViewModel.MaterialReceiveModel.ArpReceivePlanMst" />
+                </div>
+                <div class="card-body">
+                    <TabelAllProperty Title="LST_ARP_Receive_Plan_DTL" ViewModel="ViewModel.MaterialReceiveModel.LstArpReceivePlanDtl" />
+                </div>
+                <div class="card-body">
+                    <TabelAllProperty Title="LST_ARP_Receive_Plan_DTL_Barcode" ViewModel="ViewModel.MaterialReceiveModel.LstArpReceivePlanDtlBarcode" />
+                </div>
+                <div class="card-body">
+                    <TabelAllProperty Title="LST_ARP_Receive_Plan_DTL_Reference" ViewModel="ViewModel.MaterialReceiveModel.LstArpReceivePlanDtlReference" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <Alert Color="Color.Dark" Visible>
+        <AlertMessage>Material Management</AlertMessage>
+    </Alert>
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <TabelAllProperty Title="RM_OTHER_OUTMST" SiteID="(int)ViewModel.MaterialReceiveModel.ARP_Material_Request_MST.OwnerSite" ViewModel="ViewModel.MaterialReceiveModel.RmOtherOutmst" />
+                </div>
+                <div class="card-body">
+                    <TabelAllProperty Title="LST_RM_OTHER_OUTDTL" SiteID="(int)ViewModel.MaterialReceiveModel.ARP_Material_Request_MST.OwnerSite" ViewModel="ViewModel.MaterialReceiveModel.LstRmOtherOutdtl" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <TabelAllProperty Title="RM_Cust_INMST_External" SiteID="(int)ViewModel.MaterialReceiveModel.ARP_Material_Request_MST.ReceiveSite" ViewModel="ViewModel.MaterialReceiveModel.RmCustInmstExternal" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <TabelAllProperty Title="RM_CUST_INMST_Owner" SiteID="(int)ViewModel.MaterialReceiveModel.ARP_Material_Request_MST.OwnerSite" ViewModel="ViewModel.MaterialReceiveModel.RmCustInmstOwner" />
+                </div>
+                <div class="card-body">
+                    <TabelAllProperty Title="RM_CUST_INMST_Receive" SiteID="(int)ViewModel.MaterialReceiveModel.ARP_Material_Request_MST.ReceiveSite" ViewModel="ViewModel.MaterialReceiveModel.RmCustInmstReceive" />
+                </div>
+                <div class="card-body">
+                    <TabelAllProperty Title="LST_RM_CUST_INDTL_Owner" SiteID="(int)ViewModel.MaterialReceiveModel.ARP_Material_Request_MST.OwnerSite" ViewModel="ViewModel.MaterialReceiveModel.LstRmCustIndtlOwner" />
+                </div>
+                <div class="card-body">
+                    <TabelAllProperty Title="LST_RM_CUST_INDTL_Receive" SiteID="(int)ViewModel.MaterialReceiveModel.ARP_Material_Request_MST.ReceiveSite" ViewModel="ViewModel.MaterialReceiveModel.LstRmCustIndtlReceive" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <TabelAllProperty Title="LST_RM_ALL_INDTL_EXT_Owner" SiteID="(int)ViewModel.MaterialReceiveModel.ARP_Material_Request_MST.OwnerSite" ViewModel="ViewModel.MaterialReceiveModel.LstRmAllIndtlExtOwner" />
+                </div>
+                <div class="card-body">
+                    <TabelAllProperty Title="LST_RM_ALL_INDTL_EXT_Receive" SiteID="(int)ViewModel.MaterialReceiveModel.ARP_Material_Request_MST.ReceiveSite" ViewModel="ViewModel.MaterialReceiveModel.LstRmAllIndtlExtReceive" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <TabelAllProperty Title="LST_RM_OtherOut_Map_Report" SiteID="(int)ViewModel.MaterialReceiveModel.ARP_Material_Request_MST.OwnerSite" ViewModel="ViewModel.MaterialReceiveModel.LstRmOtherOutMapReport" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <TabelAllProperty Title="RM_Cust_IN_OUT_Mapping_Owner" SiteID="(int)ViewModel.MaterialReceiveModel.ARP_Material_Request_MST.OwnerSite" ViewModel="ViewModel.MaterialReceiveModel.RmCustInOutMappingOwner" />
+                </div>
+                <div class="card-body">
+                    <TabelAllProperty Title="RM_Cust_IN_OUT_Mapping_Receive" SiteID="(int)ViewModel.MaterialReceiveModel.ARP_Material_Request_MST.ReceiveSite" ViewModel="ViewModel.MaterialReceiveModel.RmCustInOutMappingReceive" />
+                </div>
+                <div class="card-body">
+                    <TabelAllProperty Title="LST_RM_Cust_IN_OUT_Barcode_Mapping_Owner" SiteID="(int)ViewModel.MaterialReceiveModel.ARP_Material_Request_MST.OwnerSite" ViewModel="ViewModel.MaterialReceiveModel.LstRmCustInOutBarcodeMappingOwner" />
+                </div>
+                <div class="card-body">
+                    <TabelAllProperty Title="LST_RM_Cust_IN_OUT_Barcode_Mapping_Receive" SiteID="(int)ViewModel.MaterialReceiveModel.ARP_Material_Request_MST.ReceiveSite" ViewModel="ViewModel.MaterialReceiveModel.LstRmCustInOutBarcodeMappingReceive" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <TabelAllProperty Title="LST_RM_BAL_Owner" SiteID="(int)ViewModel.MaterialReceiveModel.ARP_Material_Request_MST.OwnerSite" ViewModel="ViewModel.MaterialReceiveModel.LstRmBalOwner" />
+                </div>
+                <div class="card-body">
+                    <TabelAllProperty Title="LST_RM_BAL_Receive" SiteID="(int)ViewModel.MaterialReceiveModel.ARP_Material_Request_MST.ReceiveSite" ViewModel="ViewModel.MaterialReceiveModel.LstRmBalReceive" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+else if (!ViewModel.IsBusy)
+{
+    <code>ไม่พบข้อมูล</code>
+}
+@ViewModel.IsBusy;
+@inject HttpClient Http
+@inject IHttpService HttpService
+@code {
+    [Parameter]
+    public string? DocNo { set { ViewModel.DocNo = value; } }
+    [Parameter]
+    public int? OwnerSiteId { set { ViewModel.OwnerSiteId = value ?? 0; } }
+    [Parameter]
+    public int? ReceiveSiteId { set { ViewModel.ReceiveSiteId = value ?? 0; } }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await ViewModel.LoadReceiveDetail();
+    }
+}

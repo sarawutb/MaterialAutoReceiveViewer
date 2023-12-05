@@ -1,0 +1,54 @@
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="Pages\MaterialReceivePlanDetail.razor" />
+    <Content Remove="wwwroot\Data\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Blazorise.Bootstrap" Version="1.3.3" />
+    <PackageReference Include="Blazorise.DataGrid" Version="1.3.3" />
+    <PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.3.3" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.19" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.19" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="RestSharp" Version="110.2.0" />
+    <PackageReference Include="Blazor.Bootstrap" Version="1.10.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\MaterialReceivePlanDetail.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\MaterialReceivePlanDetail.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Setting\" />
+    <None Remove="Pages\Compronent\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Pages\MaterialReceivePlanDetail.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Setting\" />
+    <Folder Include="Pages\Compronent\" />
+    <Folder Include="wwwroot\Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Condition="'$(ExcludeConfigFilesFromBuildOutput)'!='true'" Update="wwwroot\Data\LogError.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,37 @@
+﻿@using Material_Auto_Receive_Viewer.ViewModels;
+@using Material_Auto_Receive_Viewer.ViewModels.Imprement;
+@inherits MvvmComponentBase<LoadingViewModel>
+<style>
+    .FrontLoading {
+        background-color: rgba(0, 0, 0, 0.5);
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: 0;
+        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        z-index: 1;
+    }
+
+    .LoadingPage {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100px;
+        height: 100px;
+    }
+</style>
+@if (ViewModel.IsLoading)
+{
+    <div class="FrontLoading">
+        <dotlottie-player class="LoadingPage" src="https://lottie.host/1dda0aa2-bd3c-4d95-8703-794509d97c1f/quDTPUbb8T.json" background="transparent" speed="1" loop autoplay></dotlottie-player>
+    </div>
+}
+@code {
+
+}

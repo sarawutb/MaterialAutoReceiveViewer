@@ -1,0 +1,110 @@
+﻿@using Material_Auto_Receive_Viewer.Models;
+@using Material_Auto_Receive_Viewer.Services.Interface;
+@using Material_Auto_Receive_Viewer.Utility;
+@using System;
+@using System.Collections.Generic;
+@using System.Linq;
+@inject IMaterialService MaterialServic;
+
+<h4 class="card-title">@Title</h4>
+@if (SiteID != 0)
+{
+    <p class="card-description">
+        Site : <code class="text-primary">@GetSite(SiteID)</code>
+    </p>
+}
+
+@if (ViewModel != null)
+{
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    @if (ViewModel.GetType().IsGenericType && ViewModel.GetType().GetGenericTypeDefinition() == typeof(List<>) && ViewModel.GetType() != typeof(string))
+                    {
+                        var fstViewModel = ConvertToList(ViewModel).FirstOrDefault();
+                        foreach (var item in Utility.GetPropertiesNameOfClass(fstViewModel))
+                        {
+                            <th>
+                                @(Utility.GetPropertyNameByPropertyNameJson(fstViewModel, item))
+                            </th>
+                        }
+                    }
+                    else
+                    {
+                        foreach (var item in Utility.GetPropertiesNameOfClass(ViewModel))
+                        {
+                            <th>
+                                @(
+                                    Utility.GetPropertyNameByPropertyNameJson(ViewModel, item)
+                                    )
+                            </th>
+                        }
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @if (ViewModel.GetType().IsGenericType && ViewModel.GetType().GetGenericTypeDefinition() == typeof(List<>) && ViewModel.GetType() != typeof(string))
+                {
+                    var LstViewModel = ConvertToList(ViewModel);
+                    foreach (var obj in LstViewModel)
+                    {
+                        <tr>
+                            @foreach (var name in Utility.GetPropertiesNameOfClass(obj))
+                            {
+                                <td>
+                                    @(Utility.GetListPropertyValues<object>(obj, name))
+                                </td>
+                            }
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        @foreach (var name in Utility.GetPropertiesNameOfClass(ViewModel))
+                        {
+                            <td>
+                                @(Utility.GetListPropertyValues<object>(ViewModel, name))
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <code>ไม่มีข้อมูล</code>
+}
+
+@code {
+    [Parameter]
+    public string? Title { get; set; }
+
+    private object? _ViewModel;
+    [Parameter]
+    public object? ViewModel { get; set; }
+
+    public List<SiteAllModel> siteAllModels = new List<SiteAllModel>();
+
+    [Parameter]
+    public int SiteID { get; set; }
+
+    private List<object> ConvertToList(object obj)
+    {
+        return (obj as IEnumerable<object>)?.Cast<object>().ToList() ?? new List<object> { obj };
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        siteAllModels = await MaterialServic.GetSiteAll();
+    }
+
+    protected string GetSite(long Site)
+    {
+        var SiteData = siteAllModels.FirstOrDefault(s => s.SiteId == Site);
+        return SiteData != null ? SiteData.SiteShortName : string.Empty;
+    }
+}
