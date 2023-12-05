@@ -1,14 +1,14 @@
 ﻿    <!-- partial:partials/_sidebar.html -->
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
     <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-        <NavLink class="sidebar-brand brand-logo text-light" href="/"><h5>Material Auto Receive</h5></NavLink>
-            <NavLink class="sidebar-brand brand-logo-mini" href="index.html"><img src="assets/images/logo-mini.svg" alt="logo" /></NavLink>
-</div>
+        <NavLink style="text-decoration: none;" class="sidebar-brand brand-logo text-light" href="/" Match="NavLinkMatch.All" @onclick="ToggleAciveMenu"><h5>Material Auto Receive</h5></NavLink>
+        <NavLink style="text-decoration: none;" class="sidebar-brand brand-logo-mini" href="/" Match="NavLinkMatch.All" @onclick="ToggleAciveMenu"><img src="assets/images/logo-mini.svg" alt="logo" /></NavLink>
+    </div>
     <ul class="nav">
-       <li class="nav-item nav-category">
+        <li class="nav-item nav-category">
             <span class="nav-link">Navigation</span>
         </li>
-        <li class="nav-item @GetActive("", NavLinkMatch.All)">
+        <li class="nav-item @GetActive("", NavLinkMatch.All)" @onclick="ToggleAciveMenu">
             <NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
                 <span class="menu-icon">
                     <i class="mdi mdi-speedometer"></i>
@@ -16,7 +16,7 @@
                 <span class="menu-title">Dashboard</span>
             </NavLink>
         </li>
-        <li class="nav-item @GetActive("ErrorLog", NavLinkMatch.All)">
+        <li class="nav-item @GetActive("ErrorLog", NavLinkMatch.All)" @onclick="ToggleAciveMenu">
             <NavLink class="nav-link" href="/ErrorLog" Match="NavLinkMatch.All">
                 <span class="menu-icon">
                     <i class="mdi mdi-console text-danger"></i>
@@ -31,6 +31,8 @@
     [Inject]
     NavigationManager NavigationManager { get; set; }
 
+    string href { get; set; }
+
     bool IsActive(string href, NavLinkMatch navLinkMatch = NavLinkMatch.Prefix)
     {
         var relativePath = NavigationManager.ToBaseRelativePath(NavigationManager.Uri).ToLower();
@@ -38,4 +40,14 @@
     }
 
     string GetActive(string href, NavLinkMatch navLinkMatch = NavLinkMatch.Prefix) => IsActive(href, navLinkMatch) ? "active" : "";
+
+    private bool collapseNavMenu = true;
+
+    private string? NavMenuCssClass => collapseNavMenu ? "active" : null;
+
+    private async Task ToggleAciveMenu()
+    {
+        href = NavigationManager.Uri.Substring(NavigationManager.BaseUri.Length - 1);
+        await Task.Run(() => GetActive(href, NavLinkMatch.All));
+    }
 }

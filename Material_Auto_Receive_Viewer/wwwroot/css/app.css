@@ -66,3 +66,16 @@ a, .btn-link {
 .justify-content-between, .page-header {
     margin-top: 20px;
 }
+
+.nav-link > hr {
+    visibility: hidden;
+    color: white;
+    height: 2px;
+    margin-top: 4px;
+    margin-bottom: 0;
+}
+
+.nav-item .nav-link.active > hr {
+    visibility: visible;
+    filter: blur(1.5px);
+}

@@ -34,7 +34,6 @@ namespace Material_Auto_Receive_Viewer.ViewModels.implement
                 NotifyStateChanged();
             }
         }
-
         public async Task GetViewLog()
         {
             ErrorLog = await _materialService.GetViewLog(DateStart);

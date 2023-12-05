@@ -6,8 +6,11 @@
 @using Material_Auto_Receive_Viewer.Pages.Compronent;
 @using Material_Auto_Receive_Viewer.ViewModels.Imprement;
 @using Material_Auto_Receive_Viewer.Services.Interface;
+@using Material_Auto_Receive_Viewer.ViewModels.Imprement;
+
 
 @inherits MvvmComponentBase<ReceiveDetailViewModel>
+@inject LoadingViewModel LoadingViewModel;
 
 <h3>ReceiveDetail : @ViewModel.DocNo</h3>
 @if (ViewModel.MaterialReceiveModel.ARP_Material_Request_MST != null)
@@ -148,11 +151,10 @@
     </div>
 
 }
-else if (!ViewModel.IsBusy)
+else if (!LoadingViewModel.IsLoading)
 {
     <code>ไม่พบข้อมูล</code>
 }
-@ViewModel.IsBusy;
 @inject HttpClient Http
 @inject IHttpService HttpService
 @code {

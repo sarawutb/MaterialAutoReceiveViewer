@@ -5,23 +5,13 @@
 @using Material_Auto_Receive_Viewer.ViewModels.Imprement;
 @using Setting;
 @using Material_Auto_Receive_Viewer.ViewModels.Imprement;
-@*@using System.Globalization;*@
-
 @inherits MvvmComponentBase<IndexViewModel>
-
-@inject LoadingViewModel IsLoading;
-
 <PageTitle>@AppSetting.AppNameCombine("Dashboard")</PageTitle>
 
-@*<CascadingValue Value=@ViewModel Name="ViewModel">
-        <ToDoListComponent />
-        <ToDoFormComponent />
-    </CascadingValue>*@
 @{
     int PageNumber = 0;
 }
-
-@IsLoading.IsBusy;
+<h1>Dashboard</h1>
 <div class="row ">
     <div class="col-12 grid-margin">
         <div class="card">

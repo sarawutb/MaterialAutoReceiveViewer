@@ -9,7 +9,7 @@ namespace Material_Auto_Receive_Viewer.ViewModels.Imprement
         {
         }
 
-        public bool _IsLoading;
+        private bool _IsLoading;
         public bool IsLoading
         {
             get => _IsLoading;

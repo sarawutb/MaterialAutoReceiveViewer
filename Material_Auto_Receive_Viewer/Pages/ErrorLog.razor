@@ -6,7 +6,7 @@
 @inherits MvvmComponentBase<ErrorLogViewModel>
 @inject IJSRuntime _JS;
 
-<h3>Error Log</h3>
+<h1>Error Log</h1>
 
 <div class="row ">
     <div class="col-12 grid-margin">
@@ -38,11 +38,11 @@
     {
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Error Log Detail</h4>
+                <h2 class="card-title">Error Log Detail</h2>
                 <div class="row">
                     <div class="col-md-2">
                         <div>
-                            <p class="font-weight-bold">Url File Log : </p>
+                            <h4 class="font-weight-bold">Url File Log : </h4>
                         </div>
                     </div>
                     <div class="col-md-10">
@@ -77,6 +77,7 @@
                                                 var outData = string.Format("Output{0}", index);
                                             }
                                             <textarea hidden id="@inputData">@log.ApiData</textarea>
+                                            <button @onclick="() => CopyToClipboard(inputData)" class="btn btn-warning" type="button">Copy Json<i class="mdi mdi-mdi-json"></i></button>
                                             <div id="@outData"></div>
                                             @{
                                                 LoadJson(inputData, outData);
@@ -96,5 +97,10 @@
     protected async Task LoadJson(string InputElement, string OutPutElemnet)
     {
         await _JS.InvokeVoidAsync("ViewerJSON", InputElement, OutPutElemnet);
+    }
+
+    protected async Task CopyToClipboard(string InputElement)
+    {
+        await _JS.InvokeVoidAsync("copyToClipboard", InputElement);
     }
 }
