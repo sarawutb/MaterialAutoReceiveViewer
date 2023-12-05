@@ -5,7 +5,7 @@ using Microsoft.JSInterop;
 
 namespace Material_Auto_Receive_Viewer.ViewModels.Imprement
 {
-    public class ReceiveDetailViewModel : ViewModelBasels
+    public class ReceiveDetailViewModel : ViewModelBase
     {
         private IMaterialService _materialService;
         private IJSRuntime _JS;
