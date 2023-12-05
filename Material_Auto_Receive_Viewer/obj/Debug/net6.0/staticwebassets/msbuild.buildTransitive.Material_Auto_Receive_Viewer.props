@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="../buildMultiTargeting/Material_Auto_Receive_Viewer.props" />
-</Project>
